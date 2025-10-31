@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AI Surveillance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="header">
+      <h1>AI Surveillance — Live</h1>
+      <div>
+        <span class="badge">Detector: {{ detector_name }}</span>
+        <span class="badge">Source: {{ source_label }}</span>
+        <span class="badge">Alerts Cooldown: {{ cooldown }}s</span>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>Live Stream</h2>
+        <img class="stream" src="{{ url_for('video_feed') }}" />
+        <p><small>MJPEG stream. If it doesn't load, check your camera/source path and console logs.</small></p>
+      </div>
+      <div class="card">
+        <h2>Recent Events</h2>
+        <div class="events">
+          {% if events %}
+            {% for e in events %}
+              <div class="event">
+                <img src="{{ url_for('event_image', filename=e.filename) }}"/>
+                <div>
+                  <div><strong>{{ e.label }}</strong></div>
+                  <small>{{ e.time }}</small>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No events yet.</p>
+          {% endif %}
+        </div>
+        <h2>About</h2>
+        <div class="kv">
+          <div>Intruder:</div><div>Any person detected</div>
+          <div>Accident:</div><div>Fallen posture (heuristic)</div>
+          <div>Violence:</div><div>Close contact + high motion</div>
+        </div>
+        <p><small>Plug a trained action model in <code>detector/actions.py</code> to improve accuracy.</small></p>
+      </div>
+    </div>
+    <footer>
+      <small>© {{ year }} AI Surveillance. Snapshots saved in <code>/events</code>.</small>
+    </footer>
+  </body>
+</html>
