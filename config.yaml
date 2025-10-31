@@ -1,0 +1,21 @@
+# Heuristic thresholds
+intruder:
+  enabled: true
+
+fall:
+  enabled: true
+  min_frames: 10         # number of consecutive frames suggesting fallen posture
+  aspect_ratio: 1.2      # width/height >= this => likely horizontal posture
+
+violence:
+  enabled: true
+  proximity_iou: 0.05    # IoU between two person boxes to consider contact
+  motion_mag: 2.0        # average optical-flow magnitude in contact area
+
+alerts:
+  cooldown_sec: 60       # minimum seconds between same-type alerts
+  snapshot: true         # save snapshot on alert
+
+video:
+  draw: true             # draw boxes/labels
+  max_width: 1024        # resize for streaming
